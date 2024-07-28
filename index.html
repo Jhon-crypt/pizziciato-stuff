@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Audio with Pizzicato</title>
+    <style>
+      /* Basic styles for buttons */
+      button {
+        margin: 5px;
+        padding: 10px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Audio with Pizzicato</h1>
+    <button id="playButton">Play Sound</button>
+    <button id="stopButton">Stop Sound</button>
+
+    <!-- Include Pizzicato from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pizzicato/0.6.4/Pizzicato.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Create a new sound instance
+        /*
+      const sound = new Pizzicato.Sound('/assets/sounds/uptown.mp3', () => {
+        console.log('Sound loaded');
+      });
+      */
+
+        /*
+        var sawtoothWave = new Pizzicato.Sound({
+          source: "wave",
+          options: {
+            type: "sine",
+            frequency: 120,
+          },
+        });
+        */
+
+        var whiteNoise = new Pizzicato.Sound(function (e) {
+          var output = e.outputBuffer.getChannelData(0);
+          for (var i = 2; i < e.outputBuffer.length; i++)
+            output[i] = Math.random();
+        });
+
+        // Play sound on button click
+        document.getElementById("playButton").addEventListener("click", () => {
+            whiteNoise.play();
+        });
+
+        // Stop sound on button click
+        document.getElementById("stopButton").addEventListener("click", () => {
+            whiteNoise.stop();
+        });
+      });
+    </script>
+  </body>
+</html>
